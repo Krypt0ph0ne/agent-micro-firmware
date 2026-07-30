@@ -1,0 +1,39 @@
+name: Hardware compatibility
+description: Report a different board revision or compatibility result.
+title: "[Hardware]: "
+labels: ["hardware"]
+body:
+  - type: markdown
+    attributes:
+      value: Never attach seller images without permission, device dumps, or a CH552 UID.
+  - type: input
+    id: model
+    attributes:
+      label: Exact model and revision
+    validations:
+      required: true
+  - type: input
+    id: factory_id
+    attributes:
+      label: Factory VID:PID
+    validations:
+      required: true
+  - type: textarea
+    id: differences
+    attributes:
+      label: Observed layout and wiring differences
+    validations:
+      required: true
+  - type: textarea
+    id: tests
+    attributes:
+      label: Non-destructive tests performed
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety confirmation
+      options:
+        - label: I have not included a UID, DataFlash/factory backup, secret, or unlicensed image.
+          required: true

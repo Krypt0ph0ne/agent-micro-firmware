@@ -1,0 +1,41 @@
+name: Firmware bug
+description: Report reproducible firmware behavior on supported hardware.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include device UIDs, backups, secrets, or private logs.
+  - type: input
+    id: commit
+    attributes:
+      label: Commit or version
+      placeholder: Git commit SHA
+    validations:
+      required: true
+  - type: input
+    id: identity
+    attributes:
+      label: USB VID:PID
+      placeholder: "For example, 4249:4287"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: build
+    attributes:
+      label: Build and environment
+      description: macOS version, Mac architecture, SDCC version, and relevant output with private data removed.
+    validations:
+      required: true

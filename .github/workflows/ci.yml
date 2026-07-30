@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: firmware-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-14
+    timeout-minutes: 15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Install pinned firmware toolchain
+        run: brew install sdcc
+
+      - name: Verify source tree and build
+        run: |
+          make doctor
+          make test
+          git diff --check
+
+      - name: Check licenses and repository hygiene
+        run: |
+          test -f LICENSE
+          test -f NOTICE
+          test -f THIRD_PARTY_NOTICES.md
+          test -f SECURITY.md
+          test -f CONTRIBUTING.md
+          test -f CODE_OF_CONDUCT.md
+          test -f .github/CODEOWNERS
+          ! git ls-files | grep -E '(^|/)(backups?|build)/|(_arm64|_x86_64)$|DataFlash|manufacturer.*\\.bin$'
+          ! git grep -IEn 'CH552-[A-Z]{2}-[0-9]{4}|UID=[0-9a-fA-F:-]{8,}' -- ':!*.md'
+          ! git grep -IEn '(AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{30,}|BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY)'
+          test "$(git ls-files '*.c' '*.h' | grep -v '^include/ch554.h$' | xargs grep -L 'SPDX-License-Identifier' | wc -l | tr -d ' ')" = 0

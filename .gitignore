@@ -1,0 +1,27 @@
+# macOS and editor metadata
+.DS_Store
+.idea/
+*.swp
+*.swo
+*~
+
+# All generated build outputs
+build/
+
+# SDCC build intermediates (also protects against older toolchains)
+*.adb
+*.asm
+*.ihx
+*.lk
+*.lst
+*.map
+*.mem
+*.rel
+*.rst
+*.sym
+
+# Python caches and local virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/

@@ -1,0 +1,30 @@
+Agent Micro firmware
+Copyright (c) 2026 Krypt0ph0ne and contributors
+
+Project source:
+https://github.com/Krypt0ph0ne/agent-micro-firmware
+
+This project is derived in part from:
+
+  CH552-Macropad-mini
+  Copyright (c) Stefan Wagner
+  https://github.com/wagiminator/CH552-Macropad-mini
+  Creative Commons Attribution-ShareAlike 3.0 Unported
+
+Material changes include:
+
+- support for the tested six-key/one-encoder SinLoon board revision;
+- corrected GPIO and RGB-chain mapping;
+- separate keyboard and vendor Raw HID interfaces;
+- Raw HID protocol v2, live bindings, status, and release-all;
+- held-key press/release behavior and USB-reset safety;
+- per-key RGB effects;
+- macOS-native preflight and flashing tools;
+- reproducible SDCC build, tests, and public documentation; and
+- Agent Micro naming and USB identity management.
+
+The bundled CH554 register header and MIT-licensed tools are identified
+separately in THIRD_PARTY_NOTICES.md.
+
+This repository covers firmware and software only. It does not license the
+commercial macropad's PCB design, enclosure, branding, or other hardware.

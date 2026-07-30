@@ -17,8 +17,9 @@ the firmware and software—not the commercial PCB, enclosure, or hardware.
 
 The source is ready for experimental builds. The current custom identity
 `4249:4287` is a legacy, locally selected ID and is not officially allocated.
-A free pid.codes identity under VID `0x1209` is being requested. No stable
-firmware binary will be published before that assignment is accepted.
+A free pid.codes identity under VID `0x1209` is
+[requested as PID `0xA6E1`](https://github.com/pidcodes/pidcodes.github.com/pull/1255).
+No stable firmware binary will be published before that assignment is accepted.
 
 | Mode | VID:PID |
 | --- | --- |

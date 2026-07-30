@@ -50,9 +50,10 @@ clone. The repository contains no prebuilt flasher.
 ## 2. Inspect the board
 
 Disconnect the board. Hold it with USB-C at the top. Locate the unpopulated,
-two-pad `SW2` footprint. Bridge only those two pads with an insulated,
-non-slip tool. Do not bridge arbitrary pins or work on a powered board until
-the instructions explicitly say to connect it.
+two-pad `SW2` footprint. Bend a metal paperclip so that its tip can bridge
+**only the two SW2 contacts**; use its insulated or non-contact end as the
+handle. Do not bridge arbitrary pins or work on a powered board until the
+instructions explicitly say to connect it.
 
 If the labels or layout do not match the release photos, stop. Do not assume
 the firmware is compatible.
@@ -74,7 +75,11 @@ Now enter the protected WCH bootloader:
 1. keep USB disconnected and bridge SW2;
 2. connect through a reliable USB 2.0 hub or direct data cable;
 3. keep SW2 bridged for 5–8 seconds;
-4. release when the board briefly flashes blue.
+4. release the paperclip after the terminal reports `found 4348:55e0`.
+
+The blue LED is not a reliable bootloader indicator: it may briefly flash,
+but it does not do so on every attempt. Use the terminal output, not the LED,
+to decide whether the bootloader was reached.
 
 The tool waits up to ten minutes for bootloader ID `4348:55e0`. Expected
 milestones include:
@@ -99,6 +104,12 @@ Re-enter the bootloader with SW2 if it timed out, then run:
 ```bash
 sudo ./tools/run_native_flash_sequence.sh
 ```
+
+For this programming pass, bridge the two SW2 contacts again with the bent
+paperclip while the board is disconnected, connect USB, and keep the contacts
+shorted until the terminal begins the firmware transfer (the first `Program:`
+progress line). Then remove the paperclip. Do not wait for a blue LED; it is
+not shown reliably.
 
 This wrapper passes the flasher's explicit
 `--confirm-replace-factory` safeguard. It erases application code and cannot
@@ -153,11 +164,12 @@ Before trusting the device, test:
 Recovery does not depend on the installed application firmware:
 
 1. disconnect USB;
-2. bridge SW2 while disconnected;
+2. bridge only the two SW2 contacts with a bent paperclip while disconnected;
 3. connect while holding the bridge for 5–8 seconds;
-4. confirm `4348:55e0`;
+4. use the terminal, not the optional blue LED, to confirm `4348:55e0`;
 5. run the read-only preflight;
-6. flash and verify a trusted Agent Micro image.
+6. re-enter SW2, keep the contacts shorted until `Program:` starts, then
+   release the paperclip and flash/verify a trusted Agent Micro image.
 
 This restores an Agent Micro application, not the unavailable factory
 application.

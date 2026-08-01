@@ -1,18 +1,30 @@
 # Flashing Agent Micro on macOS
 
+> [!IMPORTANT]
+> **Developer Preview — source only.** Build the firmware and companion app
+> locally. No firmware, native-tool, or app binary is supplied for the preview.
+
 This procedure was tested only with a SinLoon SL2024502, ASIN `B0DN9T9J75`,
 with six keys, one encoder, six LEDs, factory USB ID `1189:8890`, and a CH552G.
 Visually identical devices and later revisions can have different pinouts.
 
-Flashing is destructive to the factory application. The original application
-could not be read back, so a complete return to the seller's firmware is not
-guaranteed. Read the entire procedure before starting.
+> [!CAUTION]
+> Flashing permanently replaces the manufacturer's application firmware. The
+> original code could not be backed up, no manufacturer image is available,
+> and factory restore is not possible. Recovery only reflashes Agent Micro via
+> SW2; it never restores the manufacturer firmware. Read the entire procedure
+> and accept this consequence before every flash operation.
 
-## Before the public stable release
+## Developer Preview identity and scope
 
-The source currently defaults to legacy experimental USB ID `4249:4287`.
-That ID is not officially assigned. A stable binary remains blocked until the
-pid.codes request is accepted and the assigned `1209:xxxx` identity is applied.
+The firmware and companion macOS app currently share experimental USB ID
+`4249:4287`. It was selected locally and is not an allocated public USB
+identity. `1209:A6E1` has only been requested from pid.codes; it is not
+assigned, not active, and must not be presented as an official allocation.
+
+This preview distributes source only. Users build the firmware, native flash
+tools, and matching app locally. No stable firmware binary will be published
+unless and until an appropriate identity is assigned and applied.
 
 Two original, redistributable photos are still required before the first
 stable release:
@@ -55,8 +67,9 @@ two-pad `SW2` footprint. Bend a metal paperclip so that its tip can bridge
 handle. Do not bridge arbitrary pins or work on a powered board until the
 instructions explicitly say to connect it.
 
-If the labels or layout do not match the release photos, stop. Do not assume
-the firmware is compatible.
+If the labels or layout do not match the tested hardware description in
+`HARDWARE_NOTES.md` (and the release photos once available), stop. Do not
+assume the firmware is compatible.
 
 ## 3. Run the read-only preflight
 
@@ -101,6 +114,12 @@ final `PREFLIGHT PASSED` line appears.
 
 Re-enter the bootloader with SW2 if it timed out, then run:
 
+> [!CAUTION]
+> **This is the destructive step.** It permanently replaces the manufacturer
+> application. No backup, manufacturer image, or factory-restore path exists.
+> Continue only if you accept that future recovery can only flash Agent Micro
+> again.
+
 ```bash
 sudo ./tools/run_native_flash_sequence.sh
 ```
@@ -143,8 +162,9 @@ ioreg -p IOUSB -l -w 0 |
   grep -E 'Agent Micro|"idVendor"|"idProduct"'
 ```
 
-Before pid.codes allocation, experimental builds enumerate as `4249:4287`.
-Stable release documentation will name the assigned `1209:xxxx` value.
+Developer Preview builds enumerate as the experimental `4249:4287`. The
+requested `1209:A6E1` identity is not assigned or active. Build a matching
+source-only Agent Micro app revision that recognizes `4249:4287`.
 
 ## 6. Mandatory functional acceptance
 
@@ -171,8 +191,8 @@ Recovery does not depend on the installed application firmware:
 6. re-enter SW2, keep the contacts shorted until `Program:` starts, then
    release the paperclip and flash/verify a trusted Agent Micro image.
 
-This restores an Agent Micro application, not the unavailable factory
-application.
+This installs Agent Micro again. It does not and cannot restore the unavailable
+manufacturer application.
 
 ## Troubleshooting
 
@@ -182,7 +202,7 @@ application.
 **Factory ID `1189:8890` appears:** SW2 was not bridged early or long enough.
 Disconnect completely and repeat the cold-start sequence.
 
-**Legacy ID `4249:4287` or Agent Micro appears:** The application is running,
+**Preview ID `4249:4287` or Agent Micro appears:** The application is running,
 not the bootloader. Disconnect and repeat SW2 recovery.
 
 **Bootloader appears but the tool times out:** The CH552 ROM command window is

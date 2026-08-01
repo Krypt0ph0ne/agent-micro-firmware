@@ -23,8 +23,10 @@ The app's physical left-to-right keys map to internal controls
 Their chain order is K3, K2, K1, K6, K5, K4.
 
 Confirmed USB identities are factory application `1189:8890` and WCH
-bootloader `4348:55e0`. The experimental application identity `4249:4287` is
-not an allocated public USB identity.
+bootloader `4348:55e0`. The Developer Preview application identity
+`4249:4287` is experimental and is not an allocated public USB identity.
+`1209:A6E1` has only been requested from pid.codes; it is not assigned and is
+not active in the firmware or companion app.
 
 ## Confirmed SW2 recovery
 
@@ -32,7 +34,8 @@ not an allocated public USB identity.
 2. Bridge only the two SW2 pads while disconnected.
 3. Connect through a reliable USB 2.0 path while holding the bridge.
 4. Keep SW2 bridged for approximately 5–8 seconds.
-5. Release after the board briefly flashes blue.
+5. Release after the terminal reports `found 4348:55e0`; a blue flash is not a
+   reliable indicator.
 6. Confirm `4348:55e0` before running an ISP operation.
 
 Holding a key is not a reliable bootloader method for this board. Similar
@@ -51,10 +54,11 @@ Preflight validates CH552 chip ID `0x52`, sub-ID `0x11`, bootloader version
 boundary. A device UID is read only into memory because the WCH protocol uses
 it to derive the volatile session key; it is neither displayed nor stored.
 
-The factory application code could not be read back. No factory firmware or
-device-specific backup is distributed. Therefore recovery means returning to
-the protected WCH bootloader and flashing an Agent Micro image, not restoring
-the exact seller firmware.
+Flashing permanently replaces the manufacturer application. Its code could
+not be read back, and no manufacturer firmware image or device-specific backup
+is available. Factory restore is therefore not possible. Recovery exclusively
+means returning to the protected WCH bootloader and flashing an Agent Micro
+image again.
 
 ## Hardware acceptance record
 

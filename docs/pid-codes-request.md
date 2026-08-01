@@ -2,12 +2,18 @@
 
 Status: **submitted on July 30, 2026** as
 [pidcodes/pidcodes.github.com#1255](https://github.com/pidcodes/pidcodes.github.com/pull/1255).
-Stable firmware binaries remain blocked until the request is accepted.
+The request is not an assignment: `1209:A6E1` is not active and must not be
+described as an official allocation. Stable firmware binaries remain blocked
+unless and until an appropriate identity is assigned and applied.
+
+The Developer Preview of the firmware and companion app remains source only
+and uses the locally selected experimental identity `4249:4287`. That identity
+is not an allocated public USB identity.
 
 - Organization: `Krypt0ph0ne`
 - Device: `Agent Micro`
 - Requested VID: `0x1209`
-- Requested PID: `0xA6E1` (confirmed unallocated immediately before submission)
+- Requested PID: `0xA6E1` (unallocated when checked before submission)
 - Firmware source:
   `https://github.com/Krypt0ph0ne/agent-micro-firmware`
 - Companion source:
@@ -30,5 +36,8 @@ Submission record:
 - the `Krypt0ph0ne` organization page and Agent Micro device entry are included;
 - the official pid.codes validator passes;
 - the request commit includes a DCO sign-off;
-- replace the experimental identity only after merge; and
+- do not use or advertise `1209:A6E1` as assigned before the request is
+  accepted;
+- replace the experimental identity only after assignment and coordinated
+  firmware/app changes; and
 - keep app compatibility with `4249:4287` for at least one transition release.

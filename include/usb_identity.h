@@ -3,9 +3,10 @@
 #pragma once
 
 /*
- * The legacy 4249:4287 identity is retained only for experimental source
- * builds. It is not an allocated public USB identity. A stable release must
- * not be published until pid.codes has assigned an identity under VID 0x1209.
+ * Developer Preview source builds use the experimental 4249:4287 identity.
+ * It is not an allocated public USB identity. 1209:A6E1 is requested only;
+ * it is not assigned or active. Do not publish a stable binary unless and
+ * until an appropriate identity is assigned and applied.
  */
 #define AGENT_MICRO_USB_VENDOR_ID       0x4249
 #define AGENT_MICRO_USB_PRODUCT_ID      0x4287

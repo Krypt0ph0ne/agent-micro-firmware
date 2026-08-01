@@ -3,33 +3,52 @@
 Open firmware for the tested SinLoon SL2024502 six-key, one-encoder CH552
 macropad sold under ASIN `B0DN9T9J75`.
 
-> [!WARNING]
-> Flashing replaces the factory application firmware. It could not be backed
-> up, so a complete return to the seller's original state is not guaranteed.
-> Visually identical revisions can use different wiring. Confirm the model,
-> USB identities, and SW2 location before continuing.
+> [!IMPORTANT]
+> **Developer Preview — source only.** Build the firmware and companion app
+> locally. This repository does not distribute firmware, native-tool, or app
+> binaries for the preview.
+
+> [!CAUTION]
+> Flashing permanently replaces the manufacturer's application firmware. No
+> backup or manufacturer firmware image is available, so factory restore is
+> not possible. Recovery means entering the WCH bootloader with SW2 and
+> flashing Agent Micro again. Confirm that this is acceptable before every
+> flash operation. Visually identical revisions can use different wiring;
+> verify the model, USB identities, and SW2 location first.
 
 Agent Micro is an independent community project. It is not an official
 SinLoon, Amazon, OpenAI, or Anthropic product. This repository licenses only
 the firmware and software—not the commercial PCB, enclosure, or hardware.
 
-## Current release status
+## Developer Preview status
 
-The source is ready for experimental builds. The current custom identity
-`4249:4287` is a legacy, locally selected ID and is not officially allocated.
-A free pid.codes identity under VID `0x1209` is
-[requested as PID `0xA6E1`](https://github.com/pidcodes/pidcodes.github.com/pull/1255).
-No stable firmware binary will be published before that assignment is accepted.
+The firmware and companion macOS app are being prepared together as a public
+**Developer Preview — source only**. Users build both components locally and
+flash at their own risk. The shared experimental identity is `4249:4287`; it
+was selected locally and is not an allocated public USB identity.
+
+VID:PID `1209:A6E1` is only
+[requested from pid.codes](https://github.com/pidcodes/pidcodes.github.com/pull/1255).
+It has not been assigned and is not active in either component. The request
+must not be described as an official USB allocation. No stable firmware binary
+will be published unless and until an appropriate identity is assigned and
+applied.
 
 | Mode | VID:PID |
 | --- | --- |
 | Factory application | `1189:8890` |
 | WCH ROM bootloader | `4348:55e0` |
-| Legacy experimental firmware | `4249:4287` |
-| Stable Agent Micro firmware | pending pid.codes |
+| Developer Preview firmware (active, experimental) | `4249:4287` |
+| Requested only; not assigned or active | `1209:A6E1` |
 
-The companion source-only macOS app is
-[agent-micro](https://github.com/Krypt0ph0ne/agent-micro).
+The companion [Agent Micro macOS app](https://github.com/Krypt0ph0ne/agent-micro)
+is part of the same source-only preview. Build a matching app revision that
+recognizes the active experimental `4249:4287` identity; do not configure the
+app for the requested `1209:A6E1` identity yet.
+
+Maintainers can use the joint
+[Developer Preview checklist](docs/developer-preview-checklist.md) for build,
+identity, flash-safety, and app/firmware acceptance checks.
 
 ## Supported hardware
 
@@ -67,6 +86,8 @@ Everything generated is placed below `build/`:
 - `build/agent-micro-firmware.hex`
 - `build/tools/…` native tools built from the checked-in C++ sources
 
+These are local build products, not distributed preview or stable binaries.
+
 `make doctor` rejects an SDCC version other than 4.6.0. `make test` performs a
 clean build, enforces the `0x3800` application limit, builds the native tools,
 checks shell syntax, and prints SHA-256 hashes.
@@ -77,6 +98,11 @@ Read the complete macOS procedure before bridging or flashing anything:
 [docs/flashing-macos.md](docs/flashing-macos.md).
 
 The short command sequence is:
+
+> [!CAUTION]
+> The flash command below permanently removes the manufacturer application.
+> There is no factory restore. Run it only after accepting that all recovery
+> paths reflash Agent Micro rather than restore the original firmware.
 
 ```bash
 shasum -a 256 build/agent-micro-firmware.bin
@@ -91,6 +117,8 @@ The preflight path performs no flash write. The flash path requires the
 explicit `--confirm-replace-factory` argument internally and does not contain
 DataFlash, configuration-word, bootloader, OTP, or protection-removal
 operations. Both wrappers execute only tools compiled locally by `make tools`.
+The complete guide repeats the irreversible warning immediately before the
+destructive command and documents the SW2-only recovery path.
 
 ## Contributing and security
 

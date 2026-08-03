@@ -1,7 +1,8 @@
 # Release photo checklist
 
 The first stable firmware release is blocked until the maintainers add their
-own redistributable photos:
+own redistributable photos. These photos are not present in the source-only
+Developer Preview, and the preview documentation must not imply otherwise:
 
 - `sinloon-sl2024502-sw2-orientation.jpg`: complete board, USB-C at the top,
   SW2 labeled clearly.

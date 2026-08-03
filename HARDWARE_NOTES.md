@@ -67,3 +67,19 @@ left/right/push, all six RGB pixels, keyboard press/release, Raw HID status,
 physical events, live configuration, and emergency release-all. This is
 evidence for the tested revision only, not a compatibility promise for other
 boards.
+
+## Porting to a different board
+
+The table at the top is the full set of measurements this firmware depends on.
+A board that differs in even one row needs those definitions changed and
+rebuilt, and re-verified on that board.
+
+A different number of keys or encoders cannot be handled by editing the table
+alone. `ACTION_CONTROL_COUNT` (`include/input_actions.h`, currently 9) and
+`LED_COUNT` (`include/led_control.h`, currently 6) are compile-time constants
+that the Raw HID wire format, the companion app's control indices, and the LED
+chain order all depend on. Changing them means revisiting `PROTOCOL.md` and the
+app together.
+
+This has not been done for any board other than the one measured here. Expect
+to verify every row yourself, on hardware you accept losing.

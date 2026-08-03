@@ -35,14 +35,15 @@ static void setKeyboard(uint8_t control, uint8_t modifier, uint8_t usage) {
 }
 
 void ACTION_init(void) {
-  // Existing Codex profile: six direct shortcuts and F22/F23/F24 encoder
-  // triggers consumed by CodexPad's reasoning automation.
-  setKeyboard(0, MOD_GUI | MOD_SHIFT, 0x2F); // Previous Chat
-  setKeyboard(1, MOD_GUI | MOD_ALT,   0x11); // Quick Chat
-  setKeyboard(2, MOD_GUI | MOD_SHIFT, 0x30); // Next Chat
-  setKeyboard(3, MOD_CTRL | MOD_SHIFT, 0x07); // Dictation
-  setKeyboard(4, MOD_GUI, 0x11);              // New Chat
-  setKeyboard(5, MOD_CTRL | MOD_SHIFT, 0x0A); // Review Tab
+  // Power-on defaults, sent until a host writes its own bindings over Raw HID.
+  // The six keys emit ordinary shortcut combinations and the encoder emits
+  // F22/F23/F24, which hosts can bind to whatever they like.
+  setKeyboard(0, MOD_GUI | MOD_SHIFT, 0x2F);
+  setKeyboard(1, MOD_GUI | MOD_ALT,   0x11);
+  setKeyboard(2, MOD_GUI | MOD_SHIFT, 0x30);
+  setKeyboard(3, MOD_CTRL | MOD_SHIFT, 0x07);
+  setKeyboard(4, MOD_GUI, 0x11);
+  setKeyboard(5, MOD_CTRL | MOD_SHIFT, 0x0A);
   setKeyboard(6, 0, 0x71); // F22, encoder left
   setKeyboard(7, 0, 0x72); // F23, encoder press
   setKeyboard(8, 0, 0x73); // F24, encoder right

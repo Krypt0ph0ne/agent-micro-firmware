@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: CC-BY-SA-3.0
 
-// CodexPad firmware for the confirmed six-key CH552G hardware.
+// Agent Micro firmware for the confirmed six-key CH552G hardware.
 //
 // Inputs:
 //   K1..K6: P1.6, P1.7, P1.1, P3.2, P1.4, P1.5

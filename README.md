@@ -57,6 +57,31 @@ addressable RGB LEDs, and a CH552G. Its verified pin and LED maps are in
 [HARDWARE_NOTES.md](HARDWARE_NOTES.md). Do not infer compatibility from the
 Amazon listing or enclosure alone.
 
+### Every other board is unsupported
+
+The maintainers can vouch for exactly one board. Treat anything else as
+incompatible until it has been measured and proven on that specific hardware.
+
+**A different control count cannot work.** More or fewer keys, a missing
+encoder, or a second encoder means this firmware will not run usefully on the
+device. `ACTION_CONTROL_COUNT`, the GPIO map, and the six-pixel LED chain are
+compile-time constants; a mismatch is a non-functional device, not a partially
+working one.
+
+**A matching layout is still not expected to work.** Another six-key,
+one-encoder pad may use a different controller, a different pin assignment, a
+different LED order, or different SW2 pads. If one turns out to be wired
+identically, treat that as luck rather than as compatibility. The preflight
+gate checks the CH552 chip ID, sub-ID, boot version, and fuse configuration —
+it cannot tell one CH552-based *product* from another, so passing preflight is
+not evidence that the pinout matches.
+
+Adapting the firmware to different hardware means **porting** it: re-measure
+every entry in the table in [HARDWARE_NOTES.md](HARDWARE_NOTES.md) and change
+the corresponding definitions. That is development work with an oscilloscope or
+multimeter and a board you are willing to lose. This project cannot verify the
+result, and a successful port to one board says nothing about the next.
+
 Working features include all six keys, encoder left/right/push, keyboard and
 consumer HID actions, true held-key reports, six RGB LEDs, Raw HID
 configuration/events, status, and emergency release-all. The fixed 32-byte
